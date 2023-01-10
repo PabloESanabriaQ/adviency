@@ -1,41 +1,36 @@
-export default function GiftForm({gift, quantity, giftList, 
-    onGiftChange, onQuantityChange, onGiftListChange}){
+export default function GiftForm({ gift, giftList,
+    onGiftChange, onGiftListChange }) {
 
-    function handleGiftChange(event){
-        onGiftChange((event.target.value).toString().toUpperCase());
+    function handleChange(event) {
+        onGiftChange({
+            ...gift,
+            [event.target.name] : event.target.value
+        });
     }
 
-    function handleQuantityChange(event){
-        onQuantityChange(event.target.value);
-    }
-
-
-    function handleGiftListChange(event){
+    function handleSubmit(event) {
         event.preventDefault();
-        onGiftListChange([
-            {id: new Date().getTime().toString(), 
-            gift: gift, 
-            quantity: quantity},
-            ...giftList]);
-        onQuantityChange(1);
-        onGiftChange("");
+        onGiftListChange( [ {...gift, id: new Date().getTime().toString()}, ...giftList] );
+        onGiftChange({giftName: "", quantity: +"1"})
     }
 
     return (
-        <form>
-            <input 
-            value={gift}
-            type="text"
-            onChange={handleGiftChange}
+        <form
+            onSubmit={handleSubmit}>
+            <input
+                name="giftName"
+                value={gift.giftName}
+                type="text"
+                onChange={handleChange}
             />
-            <input 
-            min={1}
-            value={quantity}
-            type="number"
-            onChange={handleQuantityChange}
+            <input
+                name="quantity"
+                min={1}
+                value={gift.quantity}
+                type="number"
+                onChange={handleChange}
             />
             <button
-            onClick={handleGiftListChange}
             >AGREGAR</button>
         </form>
     );

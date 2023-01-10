@@ -1,26 +1,24 @@
-import React, { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 import GiftForm from "./GiftForm";
 import GiftListContainer from "./GiftListContainer";
 
 export default function GiftAppContainer() {
-
-    const [gift, setGift] = React.useState("");
-    const [quantity, setQuantity] = React.useState(1);
-    const [giftList, setGiftList] = React.useState(
+;
+    const [gift, setGift] = useState({id: 0, giftName: "", quantity: "1"});
+    const [giftList, setGiftList] = useState(
         JSON.parse(window.localStorage.getItem('giftList')) || []);
 
     useEffect(() => {
         localStorage.setItem('giftList', JSON.stringify(giftList));
     });
-
+    
     return (
         <>
             <GiftForm
                 gift={gift}
                 onGiftChange={setGift}
-                quantity={quantity}
-                onQuantityChange={setQuantity}
+                
                 giftList={giftList}
                 onGiftListChange={setGiftList}
             />
@@ -28,12 +26,8 @@ export default function GiftAppContainer() {
                 giftList={giftList}
                 onGiftListChange={setGiftList}
             />
-            <h2
-                className={giftList.length ? "hidden" : ""}
-            >Agregá algún regalo, no seas tonto</h2>
-            <button onClick={() => setGiftList([])}
-                className={giftList.length < 2 ? "hidden" : ""}
-            >BORRAR TODO</button>
+            {giftList.length === 0 && <h2>Agregá algún regalo, no seas tonto</h2>}
+            {giftList.length > 1 && <button onClick={() => setGiftList([])}>BORRAR TODO</button>}
         </>
     );
 }

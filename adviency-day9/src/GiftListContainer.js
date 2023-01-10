@@ -1,17 +1,26 @@
 export default function GiftListContainer({ giftList, onGiftListChange }) {
 
-    function handleDelete(item){
+    function handleDelete(item) {
         onGiftListChange(giftList.filter(gift => item !== gift));
     }
 
     return (
         <ul>
             {giftList.map(
-                item => <li key={item.id}>
-                    <span>{item.quantity}</span>
-                    <span>{item.gift}</span>
-                    <button onClick={() => handleDelete(item)}>Borrar</button>
-                </li>)}
+                item => <ListItem
+                    key={item.id}
+                    item={item}
+                    handleDelete={handleDelete}
+                />)}
         </ul>
     );
+}
+
+function ListItem({ item, handleDelete }) {
+    return (
+        <li>
+            <span>{item.quantity}</span>
+            <span>{item.giftName}</span>
+            <button onClick={() => handleDelete(item)}>Borrar</button>
+        </li>)
 }
