@@ -27,7 +27,8 @@ export default function GiftAppContainer() {
                 onGiftListChange={setGiftList}
             />
             {giftList.length === 0 && <h2>Agregá algún regalo, no seas tonto</h2>}
-            {giftList.length > 1 && <button onClick={() => setGiftList([])}>BORRAR TODO</button>}
+            {giftList.length > 1 && <button onClick={() => setGiftList([])}
+            className="bg-amber-700 rounded-full p-4 text-white text-xl font-semibold">BORRAR TODO</button>}
         </>
     );
 }
