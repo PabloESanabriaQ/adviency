@@ -18,7 +18,7 @@ export function GiftListContainer() {
 
   useEffect(() => {
     localStorage.setItem("giftList", JSON.stringify(giftList));
-  });
+  }, [giftList]);
 
   return (
     <section
